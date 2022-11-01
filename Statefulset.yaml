@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: middlewarewa02b
+  namespace: NAME_SPACE
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: middlewarewa02b
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: middlewarewa02b
+    spec:
+      containers:
+        - name: middlewarewa02b
+          image: CONTAINER_IMAGE
+          ports:
+            - name: middlewarewa02b
+              containerPort: 3000
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: middlewarewa02b
+  serviceName: middlewarewa02b
