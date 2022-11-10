@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: middleware
+  namespace: NAME_SPACE
+spec:
+  selector:
+      matchLabels:
+        app: middleware
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: middleware
+    spec:
+      securityContext:
+        runAsUser: 1000
+      containers:
+      - name: middleware
+        image: CONTAINER_IMAGE
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m" #NEED TO CHANGE BASED ON LOAD AND PERF TESTING
+          requests:
+            memory: "250Mi"
+            cpu: "200m" #NEED TO CHANGE BASED ON LOAD AND PERF TESTING
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: middleware
